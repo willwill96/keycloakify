@@ -8,25 +8,25 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
 {
     const jsCodeUntransformed = `
         function f() {
-            return a.p+"static/js/" + ({}[e] || e) + "." + {
+            return a.p+"static/" + ({}[e] || e) + "." + {
                 3: "0664cdc0"
             }[e] + ".chunk.js"
         }
         
         function sameAsF() {
-            return a.p+"static/js/" + ({}[e] || e) + "." + {
+            return a.p+"static/" + ({}[e] || e) + "." + {
                 3: "0664cdc0"
             }[e] + ".chunk.js"
         }
 
-        __webpack_require__.u=function(e){return"static/js/" + e + "." + {
+        __webpack_require__.u=function(e){return"static/" + e + "." + {
                 147: "6c5cee76",
                 787: "8da10fcf",
                 922: "be170a73"
             } [e] + ".chunk.js"
         }
 
-        t.miniCssF=function(e){return"static/css/"+e+"."+{
+        t.miniCssF=function(e){return"static/"+e+"."+{
                 164:"dcfd7749",
                 908:"67c9ed2c"
             }[e]+".chunk.css"
@@ -43,13 +43,13 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
 
         const fixedJsCodeExpected = `
             function f() {
-                return window.kcContext.url.resourcesPath + "/build/static/js/" + ({}[e] || e) + "." + {
+                return window.kcContext.url.resourcesPath + "/build/static/" + ({}[e] || e) + "." + {
                     3: "0664cdc0"
                 }[e] + ".chunk.js"
             }
 
             function sameAsF() {
-                return window.kcContext.url.resourcesPath + "/build/static/js/" + ({}[e] || e) + "." + {
+                return window.kcContext.url.resourcesPath + "/build/static/" + ({}[e] || e) + "." + {
                     3: "0664cdc0"
                 }[e] + ".chunk.js"
             }
@@ -64,7 +64,7 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
                 }
                 return "u";
             })()] = function(e) {
-                return "/build/static/js/" + e + "." + {
+                return "/build/static/" + e + "." + {
                     147: "6c5cee76",
                     787: "8da10fcf",
                     922: "be170a73"
@@ -81,7 +81,7 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
                 }
                 return "miniCssF";
             })()] = function(e) {
-                return "/build/static/css/" + e + "." + {
+                return "/build/static/" + e + "." + {
                     164:"dcfd7749",
                     908:"67c9ed2c"
                 } [e] + ".chunk.css"
@@ -103,13 +103,13 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
 
         const fixedJsCodeExpected = `
             function f() {
-                return ("kcContext" in window ? "https://demo-app.keycloakify.dev/" : a.p) + "static/js/" + ({}[e] || e) + "." + {
+                return ("kcContext" in window ? "https://demo-app.keycloakify.dev/" : a.p) + "static/" + ({}[e] || e) + "." + {
                     3: "0664cdc0"
                 }[e] + ".chunk.js"
             }
 
             function sameAsF() {
-                return ("kcContext" in window ? "https://demo-app.keycloakify.dev/" : a.p) + "static/js/" + ({}[e] || e) + "." + {
+                return ("kcContext" in window ? "https://demo-app.keycloakify.dev/" : a.p) + "static/" + ({}[e] || e) + "." + {
                     3: "0664cdc0"
                 }[e] + ".chunk.js"
             }
@@ -125,7 +125,7 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
                 }
                 return "u";
             })()] = function(e) {
-                return "static/js/" + e + "." + {
+                return "static/" + e + "." + {
                     147: "6c5cee76",
                     787: "8da10fcf",
                     922: "be170a73"
@@ -143,7 +143,7 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
                 }
                 return "miniCssF";
             })()] = function(e) {
-                return "static/css/" + e + "." + {
+                return "static/" + e + "." + {
                     164:"dcfd7749",
                     908:"67c9ed2c"
                 } [e] + ".chunk.css"
@@ -166,7 +166,7 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
             }
 
             .my-div {
-                background-image: url(/static/media/something.svg);
+                background-image: url(/static/something.svg);
             }
         `
     });
@@ -181,7 +181,7 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
         }
 
         .my-div {
-            background-image: var(--urldd75cab58377c19);
+            background-image: var(--url904ba7f4c1c366a);
         }
     `;
 
@@ -189,7 +189,7 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
 
     const cssGlobalsToDefineExpected = {
         "url1f9ef5a892c104c": "url(/logo192.png) no-repeat center center",
-        "urldd75cab58377c19": "url(/static/media/something.svg)"
+        "url904ba7f4c1c366a": "url(/static/something.svg)"
     };
 
     assert(same(cssGlobalsToDefine, cssGlobalsToDefineExpected));
@@ -204,7 +204,7 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
     const cssCodeToPrependInHeadExpected = `
         :root {
             --url1f9ef5a892c104c: url(\${url.resourcesPath}/build/logo192.png) no-repeat center center;
-            --urldd75cab58377c19: url(\${url.resourcesPath}/build/static/media/something.svg);
+            --url904ba7f4c1c366a: url(\${url.resourcesPath}/build/static/something.svg);
         }
     `;
 
@@ -223,7 +223,7 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
             }
 
             .my-div {
-                background-image: url(/x/y/z/static/media/something.svg);
+                background-image: url(/x/y/z/static/something.svg);
             }
         `
     });
@@ -238,7 +238,7 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
         }
 
         .my-div {
-            background-image: var(--url8bdc0887b97ac9a);
+            background-image: var(--url9bc10b794d4b303);
         }
     `;
 
@@ -246,7 +246,7 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
 
     const cssGlobalsToDefineExpected = {
         "urlf8277cddaa2be78": "url(/x/y/z/logo192.png) no-repeat center center",
-        "url8bdc0887b97ac9a": "url(/x/y/z/static/media/something.svg)"
+        "url9bc10b794d4b303": "url(/x/y/z/static/something.svg)"
     };
 
     assert(same(cssGlobalsToDefine, cssGlobalsToDefineExpected));
@@ -261,7 +261,7 @@ import { assetIsSameCode } from "../tools/assertIsSameCode";
     const cssCodeToPrependInHeadExpected = `
         :root {
             --urlf8277cddaa2be78: url(\${url.resourcesPath}/build/logo192.png) no-repeat center center;
-            --url8bdc0887b97ac9a: url(\${url.resourcesPath}/build/static/media/something.svg);
+            --url9bc10b794d4b303: url(\${url.resourcesPath}/build/static/something.svg);
         }
     `;
 

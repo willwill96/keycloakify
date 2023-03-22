@@ -40,8 +40,8 @@ export function replaceImportsFromStaticInJsCode(params: { jsCode: string; build
 
     const { jsCode, buildOptions } = params;
 
-    const getReplaceArgs = (language: "js" | "css"): Parameters<typeof String.prototype.replace> => [
-        new RegExp(`([a-zA-Z_]+)\\.([a-zA-Z]+)=function\\(([a-zA-Z]+)\\){return"static\\/${language}\\/"`, "g"),
+    const getReplaceArgs = (): Parameters<typeof String.prototype.replace> => [
+        new RegExp(`([a-zA-Z_]+)\\.([a-zA-Z]+)=function\\(([a-zA-Z]+)\\){return"static\\/"`, "g"),
         (...[, n, u, e]) => `
 			${n}[(function(){
                 var pd= Object.getOwnPropertyDescriptor(${n}, "p");
@@ -64,12 +64,11 @@ export function replaceImportsFromStaticInJsCode(params: { jsCode: string; build
                 }
                 }
 				return "${u}";
-			})()] = function(${e}) { return "${buildOptions.isStandalone ? "/build/" : ""}static/${language}/"`
+			})()] = function(${e}) { return "${buildOptions.isStandalone ? "/build/" : ""}static/"`
     ];
 
     const fixedJsCode = jsCode
-        .replace(...getReplaceArgs("js"))
-        .replace(...getReplaceArgs("css"))
+        .replace(...getReplaceArgs())
         .replace(/([a-zA-Z]+\.[a-zA-Z]+)\+"static\//g, (...[, group]) =>
             buildOptions.isStandalone
                 ? `window.${ftlValuesGlobalName}.url.resourcesPath + "/build/static/`
